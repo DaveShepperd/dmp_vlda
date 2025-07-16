@@ -1,0 +1,64 @@
+# $Id$
+# dmp_vlda makefile
+# 071525 - D. Shepperd
+
+MACXX_DIR = ../macxx/
+
+ALLH += $(MACXX_DIR)formats.h
+ALLH += $(MACXX_DIR)pragma1.h
+ALLH += $(MACXX_DIR)pragma.h
+ALLH += $(MACXX_DIR)segdef.h
+ALLH += $(MACXX_DIR)vlda_structs.h
+
+OBJ_FILES = dmp_vlda.o
+
+# Extra defines available #-DALIGNMENT=2 #-DBIG_ENDIAN #-DDEBUG_MALLOC #-DDEBUG_LINK 
+DEFINES = -DEXTERNAL_PACKED_STRUCTS -D_ISOC99_SOURCE
+DEFINES += $(EXTRA_DEFINES)
+
+INCS = -I. -I$(MACXX_DIR)
+
+HERE = ./
+EXE =
+ifeq ($(MINGW),1)
+	EXE = .exe
+	HERE = .\\
+endif
+ifeq ($(MSYS2),1)
+	EXE = .exe
+endif
+
+WARN = -std=c99 -Wall -ansi -pedantic -Wno-char-subscripts
+CFLAGS = $(OPT) $(DBG) $(WARN) $(DEFINES) $(HOST_MACH) $(INCS)
+
+C = $(CC) -c $(CFLAGS)
+D = $(CC) -c $(CFLAGS)
+L = $(CC) $(DBG) $(HOST_MACH)
+MAKEFILE = Makefile.common
+ALLH += $(MAKEFILE)
+
+default: dmp_vlda$(EXE)
+	$(ECHO) $(DELIM)    Done...$(DELIM)
+
+% :
+	@echo $(DELIM) Hmmm...Do not know how to make $@...$(DELIM)
+
+.SILENT:
+
+dmp_vlda$(EXE) : $(OBJ_FILES) $(MAKEFILE)
+	@$(ECHO) $(DELIM)    linking...$(DELIM)
+	$L -o $@ $(filter-out $(MAKEFILE),$^)
+
+%.o : %.c
+	$(ECHO) $(DELIM)    Compiling $<...$(DELIM)
+	$(CC) $(CFLAGS) -c -DFILE_ID_NAME=$(basename $<)_id $(SUPPRESS_FILE_ID) $<
+
+%.E : %.c
+	$(ECHO) $(DELIM)    Compiling to .E $<...$(DELIM)
+	$(CC) $(CFLAGS) -E -DFILE_ID_NAME=$(basename $<)_id $(SUPPRESS_FILE_ID) $< > $@
+
+clean:
+	$(RM) *.o *.lis *.E dmp_vlda$(EXE) core*
+
+dmp_vlda.o: dmp_vlda.c $(ALLH) Makefile.common
+
