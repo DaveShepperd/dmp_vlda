@@ -109,8 +109,6 @@ static int decodeExpr(const uint8_t *rcd, int cnt, char *line, int lineSize)
 					continue;
 				case VLDA_EXPR_0VALUE:	/* value of 0 */
 					len += snprintf(line+len,lineSize-len," 0");
-					++rcd;
-					--cnt;
 					--ptr;
 					continue;
 				case VLDA_EXPR_CVALUE:	/* 1 byte value */
@@ -136,8 +134,8 @@ static int decodeExpr(const uint8_t *rcd, int cnt, char *line, int lineSize)
 						char cc, oper[3], *op;
 						op = oper;
 						cc = *rcd++;
-						*op++ = cc;
 						--cnt;
+						*op++ = cc;
 						if ( cc == '!' )
 						{
 							*op++ = *rcd++;
@@ -309,12 +307,12 @@ static const char* decodeType(uint16_t cnt, const uint8_t *rcd, char *line, int 
 			}
 			break;
 		}
-	case VLDA_ORG:      /* set the PC record */
 	case VLDA_TPR:      /* transparent record (raw data follows */
 	case VLDA_DBGDFILE: /* dbg file specification */
 	case VLDA_DBGSEG:   /* dbg segment descriptors */
 		len += outputBytes(rcd+1,cnt-1,line+len,lineSize-len);
 		break;
+	case VLDA_ORG:      /* set the PC record */
 	case VLDA_EXPR:     /* expression */
 		len += decodeExpr(rcd+1,cnt-1,line+len,lineSize-len);
 		break;
