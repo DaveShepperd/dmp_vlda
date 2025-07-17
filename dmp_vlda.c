@@ -10,7 +10,7 @@
 #include "vlda_structs.h"
 #include "formats.h"
 
-#define VERSION "1.00"
+#define VERSION "1.01"
 
 #ifndef n_elts
 	#define n_elts(x) (sizeof(x)/sizeof((x)[0]))
@@ -315,6 +315,7 @@ static const char* decodeType( InpOptions_t *options, const uint8_t *rcd, uint16
 					return NULL;
 				}
 				len += snprintf(options->line + len, options->lineSize - len, " %08X ->", vabs->vlda_addr);
+				options->base = len;
 				len += outputBytes(options, rcd + sizeof(VLDA_abs), cnt - sizeof(VLDA_abs));
 			}
 			break;
