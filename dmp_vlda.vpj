@@ -12,7 +12,7 @@
 		Version="1"
 		OutputFile="%bddmp_vlda"
 		CompilerConfigName="Latest Version"
-		Defines='"/DM_UNIX" "/DEXTERNAL_PACKED_STRUCTS"'>
+		Defines='"/DM_UNIX" "/DEXTERNAL_PACKED_STRUCTS" "/D_GNU_SOURCE"'>
 		<Menu>
 			<Target
 				Name="Compile"
@@ -25,7 +25,7 @@
 				RunFromDir="%rw">
 				<Exec
 					CmdLine='gcc -c %xup -ansi %defd -g -Wall -pedantic -Werror %~other -o "%bd%n%oe" %i %f'
-					OtherOptions="-std=c99 -m32"/>
+					OtherOptions="-std=c99"/>
 			</Target>
 			<Target
 				Name="Link"
@@ -36,9 +36,7 @@
 				Deletable="0"
 				SaveOption="SaveCurrent"
 				RunFromDir="%rw">
-				<Exec
-					CmdLine='gcc %xup -g -Wall -pedantic -Werror %~other -o "%o" %objs'
-					OtherOptions="-m32 "/>
+				<Exec CmdLine='gcc %xup -g -Wall -pedantic -Werror -o "%o" %objs'/>
 			</Target>
 			<Target
 				Name="Build"
@@ -282,7 +280,7 @@
 			Name="Header Files"
 			Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.h++;*.inc;*.sh;*.cpy;*.if"
 			GUID="{F8219C92-47CD-4933-AFE6-D5EC22B246F3}">
-			<F N="formats.h"/>
+			<F N="../macxx/formats.h"/>
 			<F N="../macxx/pragma.h"/>
 			<F N="../macxx/pragma1.h"/>
 			<F N="../macxx/segdef.h"/>
@@ -321,6 +319,7 @@
 			<F
 				N="Makefile.pi"
 				Type="Makefile"/>
+			<F N="README.md"/>
 		</Folder>
 	</Files>
 </Project>

@@ -29,7 +29,7 @@ ifeq ($(MSYS2),1)
 endif
 
 WARN = -std=c99 -Wall -ansi -pedantic -Wno-char-subscripts
-CFLAGS = $(OPT) $(DBG) $(WARN) $(DEFINES) $(HOST_MACH) $(INCS)
+CFLAGS = -D_GNU_SOURCE $(OPT) $(DBG) $(WARN) $(DEFINES) $(HOST_MACH) $(INCS)
 
 C = $(CC) -c $(CFLAGS)
 D = $(CC) -c $(CFLAGS)
