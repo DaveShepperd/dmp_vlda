@@ -10,7 +10,7 @@
 #include "vlda_structs.h"
 #include "formats.h"
 
-#define VERSION "1.01"
+#define VERSION "1.02"
 
 #ifndef n_elts
 	#define n_elts(x) (sizeof(x)/sizeof((x)[0]))
@@ -189,7 +189,7 @@ static int decodeExpr(InpOptions_t *options, const uint8_t *rcd, int cnt)
 	int ptr, len = options->base;
 
 	ptr = cnt ? rcd[0] : 0;
-	len += snprintf(options->line + len, options->lineSize - len, " Expr Terms=%d, cnt=%d", ptr, cnt);
+	len += snprintf(options->line + len, options->lineSize - len, " Expr: bytes=%d, Terms=%d", cnt, ptr);
 	if ( cnt )
 	{
 		++rcd;
@@ -300,7 +300,6 @@ static const char* decodeType( InpOptions_t *options, const uint8_t *rcd, uint16
 	options->base = len;
 	switch (code)
 	{
-	case VLDA_XFER:     /* transfer address */
 	case VLDA_ABS:      /* vlda relocatible text record */
 	case VLDA_TXT:      /* vlda text record */
 		{
@@ -442,6 +441,7 @@ static const char* decodeType( InpOptions_t *options, const uint8_t *rcd, uint16
 		break;
 	case VLDA_ORG:      /* set the PC record */
 	case VLDA_EXPR:     /* expression */
+	case VLDA_XFER:     /* transfer address */
 		options->base = len;
 		len += decodeExpr(options, rcd + 1, cnt - 1);
 		break;

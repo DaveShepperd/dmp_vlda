@@ -31,7 +31,7 @@ items on each line are:
 
 * ABS - This will only appear in .vlda files. The 8 hex digit number is the physical address where the bytes are to be depositied.
 * TXT - The 8 hex digit number is the relative address where the bytes are to be depositied.
-* GSD - Global Symbol/Segment Definition. If a segment type, the keyword SEG will be present. If a symbol type the keyword SYM will be present. In the above examples, the symbol EEPROM is not defined where the symbol eer_bumph is defined via the expression displayed at the end of the line.
+* GSD - Global Symbol/Segment Definition. If a segment type, the keyword SEG will be present. If a symbol type the keyword SYM will be present. In the above examples, the symbol EEPROM is not defined where the symbol eer\_bumph is defined via the expression displayed at the end of the line.
 * ORG - Sets the relative address (base address) where any subsequent bytes defined in TXT and EXPR records are to be deposited.
 * ID  - This will always be the first record. There is only 1 of these per file. It contains, assembly errors and warnings made by the 'img', the target CPU and the timestamp of the assembly.
 * EXPR - The bytes to deposit are computed according to the expression the laid in memory according to the tag (the last thing in the expression).
@@ -42,7 +42,7 @@ items on each line are:
 * DBGFILE - Passes debug information
 * DBGSEG - Passes debug information
 * BOFF - An expression to be computed as a branch offset.
-* OOR - An expression that tests for an out of range condition. The enclosed message is displayed if the out of range condition is met
+* OOR - An expression that tests for an out of range condition. The enclosed message is displayed if the out of range condition is met.
 
 
 
